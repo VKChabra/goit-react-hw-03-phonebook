@@ -5,6 +5,8 @@ import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
 import Contacts from 'components/Contacts';
 
+const LS_SAVEDCONTACTS = 'Contacts';
+
 export class App extends Component {
   state = {
     contacts: [
@@ -52,6 +54,20 @@ export class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
+
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem(LS_SAVEDCONTACTS));
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const contactsBackend = this.state.contacts;
+    if (prevState.contacts !== contactsBackend) {
+      localStorage.setItem(LS_SAVEDCONTACTS, JSON.stringify(contactsBackend));
+    }
+  }
 
   render() {
     const { contacts, filter } = this.state;
