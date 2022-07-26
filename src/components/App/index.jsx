@@ -63,18 +63,18 @@ export class App extends Component {
   }
 
   componentDidUpdate(_, prevState) {
-    const contactsBackend = this.state.contacts;
-    if (prevState.contacts !== contactsBackend) {
-      localStorage.setItem(LS_SAVEDCONTACTS, JSON.stringify(contactsBackend));
+    const contactsList = this.state.contacts;
+    if (prevState.contacts !== contactsList) {
+      localStorage.setItem(LS_SAVEDCONTACTS, JSON.stringify(contactsList));
     }
   }
 
   render() {
     const { contacts, filter } = this.state;
 
-    const normFilter = filter.toLowerCase();
+    const normalizedFilter = filter.toLowerCase();
     const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normFilter)
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
 
     return (
